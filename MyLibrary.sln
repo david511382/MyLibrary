@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFile", "MyFile\MyFile.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFileTests", "MyFileTests\MyFileTests.csproj", "{9E049978-B91F-46F0-B3A0-A66D30F7F502}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDbHelper", "MyDbHelper\MyDbHelper.csproj", "{32E1F05C-C1C5-42EB-BEF9-1926BE57C7C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDbHelperTests", "MyDbHelperTests\MyDbHelperTests.csproj", "{B4FA092A-0413-4B94-ABF2-94467279537B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{9E049978-B91F-46F0-B3A0-A66D30F7F502}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E049978-B91F-46F0-B3A0-A66D30F7F502}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E049978-B91F-46F0-B3A0-A66D30F7F502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32E1F05C-C1C5-42EB-BEF9-1926BE57C7C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32E1F05C-C1C5-42EB-BEF9-1926BE57C7C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32E1F05C-C1C5-42EB-BEF9-1926BE57C7C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32E1F05C-C1C5-42EB-BEF9-1926BE57C7C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4FA092A-0413-4B94-ABF2-94467279537B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4FA092A-0413-4B94-ABF2-94467279537B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4FA092A-0413-4B94-ABF2-94467279537B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4FA092A-0413-4B94-ABF2-94467279537B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
