@@ -14,7 +14,8 @@ namespace MyDbHelper.Tests
         [TestMethod()]
         public void GetDataTest()
         {
-            List<int> ilist = DbQuery<int>.GetData("select count(1) from mvc.Members");
+            string connectStr = @"Data Source=(LOCALDB)\MSSQLLOCALDB;Initial Catalog=Mvc;Integrated Security=True";
+            List<int> ilist = DbQuery<int>.GetData("select count(1) from mvc.Members", connectStr);
             Assert.AreEqual(ilist[0], 0);
         }
     }

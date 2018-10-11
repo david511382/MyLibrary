@@ -10,9 +10,15 @@ namespace MyDbHelper
 {
     public static class DbQuery<T>
     {
-        public static List<T> GetData(string sqlcmd)
+        /// <summary>
+        /// get data from connectStr by sqlcmd
+        /// </summary>
+        /// <param name="sqlcmd"></param>
+        /// <param name="connectStr"></param>
+        /// <returns></returns>
+        public static List<T> GetData(string sqlcmd, string connectStr)
         {
-            using (SqlConnection sc = new SqlConnection(@"Data Source=(LOCALDB)\MSSQLLOCALDB;Initial Catalog=Mvc;Integrated Security=True"))
+            using (SqlConnection sc = new SqlConnection(connectStr))
             {
                 return sc.Query<T>(sqlcmd).ToList();
             }
