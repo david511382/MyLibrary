@@ -17,6 +17,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDbHelperTests", "MyDbHelp
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "UnitTestDatabase", "UnitTestDatabase\UnitTestDatabase.sqlproj", "{86D8B730-2051-46BC-91C8-03ED57295D96}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9E82A72B-C65A-4ECB-86A0-3195D9BC9949}"
+	ProjectSection(SolutionItems) = preProject
+		Package.nuspec = Package.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
