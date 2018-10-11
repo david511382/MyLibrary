@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>david511382.MyLib</id>
-    <version>1.0.1</version>
+    <version>1.0.3</version>
     <authors>david</authors>
     <owners>david</owners>
     <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
@@ -15,12 +15,12 @@
     <tags>Tag1 Tag2</tags>
     <dependencies>
       <dependency id="SampleDependency" version="1.0" />
+	  <dependency id="Dapper" version="1.50.5" />
     </dependencies>
   </metadata>
   <files>
-    <!--<file src="MyCommand\bin\Debug\MyCommand.dll" target="lib"></file>
-	<file src="MyFile\bin\Debug\MyFile.dll" target="lib"></file>
-	-->
+    <file src="MyCommand\bin\Debug\MyCommand.dll" target="lib"></file>
+	  <file src="MyFile\bin\Debug\MyFile.dll" target="lib"></file>
     <file src="MyDbHelper\bin\Debug\MyDbHelper.dll" target="lib"></file>
   </files>
 </package>
