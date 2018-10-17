@@ -10,7 +10,8 @@ namespace MyRedisHelper
     public class RedisManager
     {
         private PooledRedisClientManager _prcm;
-        
+        private IRedisSubscription _redisSubscription;
+
         public RedisManager(string redisPath)
         {
             _prcm = new PooledRedisClientManager(new string[] { redisPath });
@@ -29,33 +30,55 @@ namespace MyRedisHelper
                 });
         }
 
-        public void Subscription(Action<string, string> onMessage, Action<string> OnSubscribe, Action<string> OnUnSubscribe, string channelName)
+        public void Subscription(string channelName, Action<string, string> onMessage, Action<string> OnSubscribe = null, Action<string> OnUnSubscribe = null)
         {
             using (IRedisClient Redis = _prcm.GetClient())
             {
-                using (IRedisSubscription redisSubscription = Redis.CreateSubscription())
+                if (_redisSubscription == null)
+                    _redisSubscription = Redis.CreateSubscription();
+                //接收消息处理Action
+                _redisSubscription.OnMessage = (changel, msg) =>
                 {
-                    //接收消息处理Action
-                    redisSubscription.OnMessage = (changel, msg) =>
-                    {
-                        onMessage?.Invoke(changel, msg);
-                    };
+                    onMessage?.Invoke(changel, msg);
+                };
 
+                if (OnSubscribe != null)
+                {
                     //订阅事件处理
-                    redisSubscription.OnSubscribe = (channel) =>
+                    _redisSubscription.OnSubscribe = (channel) =>
                     {
                         OnSubscribe?.Invoke(channel);
                     };
+                }
 
+                if (OnUnSubscribe != null)
+                {
                     //取消订阅事件处理
-                    redisSubscription.OnUnSubscribe = (channel) =>
+                    _redisSubscription.OnUnSubscribe = (channel) =>
                     {
                         OnUnSubscribe?.Invoke(channel);
                     };
-
-                    //订阅频道
-                    redisSubscription.SubscribeToChannels(channelName);
                 }
+
+                //订阅频道
+                _redisSubscription.SubscribeToChannels(channelName);
+            }
+        }
+
+        public void UnSubscription(string channelName)
+        {
+            using (IRedisClient Redis = _prcm.GetClient())
+            {
+                _redisSubscription?.UnSubscribeFromAllChannels();
+                _redisSubscription = null;
+            }
+        }
+
+        public void Publish(string channelName, string msg, int index)
+        {
+            using (IRedisClient Redis = _prcm.GetClient())
+            {
+                Redis.PublishMessage(channelName, string.Format(msg, index));
             }
         }
 
@@ -83,11 +106,11 @@ namespace MyRedisHelper
             }
         }
 
-        public void Set<T>(string key, T value,int expire)
+        public void Set<T>(string key, T value, int expire)
         {
             using (IRedisClient Redis = _prcm.GetClient())
             {
-                Redis.Set<T>(key, value,new TimeSpan(0,0, expire));
+                Redis.Set<T>(key, value, new TimeSpan(0, 0, expire));
             }
         }
 
@@ -95,7 +118,7 @@ namespace MyRedisHelper
         {
             using (IRedisClient Redis = _prcm.GetClient())
             {
-                Redis.SetEntryInHash(hashId,key,value);
+                Redis.SetEntryInHash(hashId, key, value);
             }
         }
 
