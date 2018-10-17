@@ -26,6 +26,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRedisHelper", "MyRedisHel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRedisHelperTests", "MyRedisHelperTests\MyRedisHelperTests.csproj", "{29476B45-3C1E-4309-9242-9474B4F81669}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyReflection", "MyReflection\MyReflection.csproj", "{F31A533B-6189-4785-99BA-4E397053498F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyReflectionTests", "MyReflectionTests\MyReflectionTests.csproj", "{D541114A-93F1-44F1-9E85-40ECCBA4210A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +74,14 @@ Global
 		{29476B45-3C1E-4309-9242-9474B4F81669}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29476B45-3C1E-4309-9242-9474B4F81669}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29476B45-3C1E-4309-9242-9474B4F81669}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F31A533B-6189-4785-99BA-4E397053498F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F31A533B-6189-4785-99BA-4E397053498F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F31A533B-6189-4785-99BA-4E397053498F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F31A533B-6189-4785-99BA-4E397053498F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D541114A-93F1-44F1-9E85-40ECCBA4210A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D541114A-93F1-44F1-9E85-40ECCBA4210A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D541114A-93F1-44F1-9E85-40ECCBA4210A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D541114A-93F1-44F1-9E85-40ECCBA4210A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
