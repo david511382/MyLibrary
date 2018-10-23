@@ -36,28 +36,23 @@ namespace MyRedisHelper
             {
                 if (_redisSubscription == null)
                     _redisSubscription = Redis.CreateSubscription();
+
                 //接收消息处理Action
-                _redisSubscription.OnMessage = (changel, msg) =>
+                if (onMessage != null)
                 {
-                    onMessage?.Invoke(changel, msg);
-                };
+                    _redisSubscription.OnMessage = onMessage;
+                }
 
                 if (OnSubscribe != null)
                 {
                     //订阅事件处理
-                    _redisSubscription.OnSubscribe = (channel) =>
-                    {
-                        OnSubscribe?.Invoke(channel);
-                    };
+                    _redisSubscription.OnSubscribe = OnSubscribe;
                 }
 
                 if (OnUnSubscribe != null)
                 {
                     //取消订阅事件处理
-                    _redisSubscription.OnUnSubscribe = (channel) =>
-                    {
-                        OnUnSubscribe?.Invoke(channel);
-                    };
+                    _redisSubscription.OnUnSubscribe = OnUnSubscribe;
                 }
 
                 //订阅频道

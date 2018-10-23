@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -13,28 +14,30 @@ namespace MyDbHelper
         /// <summary>
         /// get data from connectStr by sqlcmd
         /// </summary>
-        /// <param name="sqlcmd"></param>
         /// <param name="connectStr"></param>
+        /// <param name="sqlcmd"></param>
+        /// <param name="paramss"></param>
         /// <returns></returns>
-        public static List<T> GetData(string connectStr, string sqlcmd)
+        public static List<T> GetData(string connectStr, string sqlcmd, params KeyValuePair<string, dynamic>[] paramss)
         {
-            using (SqlConnection sc = new SqlConnection(connectStr))
+            try
             {
-                return sc.Query<T>(sqlcmd).ToList();
-            }
-        }
+                using (SqlConnection sc = new SqlConnection(connectStr))
+                {
+                    if (paramss != null)
+                    {
+                        DynamicParameters dynamicParameters = new DynamicParameters();
+                        foreach (KeyValuePair<string, dynamic> d in paramss)
+                            dynamicParameters.Add(d.Key, d.Value);
+                        return sc.Query<T>(sqlcmd, dynamicParameters).ToList();
+                    }
 
-        /// <summary>
-        /// async get data from connectStr by sqlcmd
-        /// </summary>
-        /// <param name="sqlcmd"></param>
-        /// <param name="connectStr"></param>
-        /// <returns></returns>
-        public static List<T> GetDataAsync(string connectStr, string sqlcmd)
-        {
-            using (SqlConnection sc = new SqlConnection(connectStr))
+                    return sc.Query<T>(sqlcmd).ToList();
+                }
+            }
+            catch (Exception e)
             {
-                return sc.QueryAsync<T>(sqlcmd).Result.ToList();
+                throw e;
             }
         }
 
@@ -45,21 +48,33 @@ namespace MyDbHelper
         /// <param name="sqlcmd"></param>
         /// <param name="paramss"></param>
         /// <returns></returns>
-        public static List<T> GetDataAsync(string connectStr, string sqlcmd, KeyValuePair<string, dynamic>[] paramss)
+        public static List<T> GetDataAsync(string connectStr, string sqlcmd, params KeyValuePair<string, dynamic>[] paramss)
         {
-            DynamicParameters dynamicParameters = new DynamicParameters();
-            foreach (KeyValuePair<string, dynamic> d in paramss)
-                dynamicParameters.Add(d.Key, d.Value);
-
-            using (SqlConnection sc = new SqlConnection(connectStr))
+            try
             {
-                return sc.QueryAsync<T>(sqlcmd, dynamicParameters).Result.ToList();
+                using (SqlConnection sc = new SqlConnection(connectStr))
+                {
+                    if (paramss != null)
+                    {
+                        DynamicParameters dynamicParameters = new DynamicParameters();
+                        foreach (KeyValuePair<string, dynamic> d in paramss)
+                            dynamicParameters.Add(d.Key, d.Value);
+                        return sc.QueryAsync<T>(sqlcmd, dynamicParameters).Result.ToList();
+                    }
+
+                    return sc.QueryAsync<T>(sqlcmd).Result.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }
 
     public static class DbQuery
     {
+        #region exc
         /// <summary>
         /// async exc connectStr by sqlcmd
         /// </summary>
@@ -69,18 +84,56 @@ namespace MyDbHelper
         /// <returns></returns>
         public static void ExcAsync(string connectStr, string sqlcmd, KeyValuePair<string, dynamic>[] paramss = null)
         {
-            DynamicParameters dynamicParameters = new DynamicParameters();
-            if (paramss != null)
-                foreach (KeyValuePair<string, dynamic> d in paramss)
-                    dynamicParameters.Add(d.Key, d.Value);
-
-            using (SqlConnection sc = new SqlConnection(connectStr))
+            try
             {
+                DynamicParameters dynamicParameters = new DynamicParameters();
                 if (paramss != null)
-                    sc.Execute(sqlcmd, dynamicParameters);
-                else
-                    sc.Execute(sqlcmd);
+                    foreach (KeyValuePair<string, dynamic> d in paramss)
+                        dynamicParameters.Add(d.Key, d.Value);
+
+                using (SqlConnection sc = new SqlConnection(connectStr))
+                {
+                    if (paramss != null)
+                        sc.Execute(sqlcmd, dynamicParameters);
+                    else
+                        sc.Execute(sqlcmd);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
+        #endregion
+
+        #region get
+        public static DataTable GetData(string strSql, string strConn, params SqlParameter[] sqlParameters)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlConnection sc = new SqlConnection(strConn))
+                {
+                    using (SqlCommand sqlCom = new SqlCommand(strSql, sc))
+                    {
+                        sc.Open();
+                        if (sqlParameters != null)
+                            sqlCom.Parameters.AddRange(sqlParameters);
+
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(sqlCom))
+                        {
+                            adapter.Fill(dt);
+                            sqlCom.Dispose();
+                            return dt;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
     }
 }
