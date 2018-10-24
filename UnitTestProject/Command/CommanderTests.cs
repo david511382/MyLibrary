@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyCommand.Tests
+namespace Command.Tests
 {
     [TestClass()]
     public class CommanderTests
@@ -18,7 +18,7 @@ namespace MyCommand.Tests
             string name = "excTest.bat";
             string path = FileManger.GetCurrentPath();
             path = FileManger.GetUpPath(path, 2);
-            path = FileManger.GetDownPath(path, "Files");
+            path = FileManger.GetDownPath(path, "TestFiles");
             path = FileManger.GetDownPath(path, name);
 
             Commander.exc(path);

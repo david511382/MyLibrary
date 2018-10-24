@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyDbHelper.Tests
+namespace DbHelper.Tests
 {
     [TestClass()]
     public class DbQueryTests
