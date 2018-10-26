@@ -14,7 +14,6 @@
     <copyright>Copyright 2018</copyright>
     <tags>File Command DB Redis Reflection</tags>
     <dependencies>
-      <dependency id="SampleDependency" version="1.0" />
       <dependency id="Dapper" version="1.50.5" />
       <dependency id="ServiceStack.Redis" version="5.4.0" />
     </dependencies>
