@@ -48,21 +48,25 @@ namespace MyDbHelper
         /// <param name="sqlcmd"></param>
         /// <param name="paramss"></param>
         /// <returns></returns>
-        public static List<T> GetDataAsync(string connectStr, string sqlcmd, params KeyValuePair<string, dynamic>[] paramss)
+        public static async Task<List<T>> GetDataAsync(string connectStr, string sqlcmd, params KeyValuePair<string, dynamic>[] paramss)
         {
             try
             {
                 using (SqlConnection sc = new SqlConnection(connectStr))
                 {
+                    IEnumerable<T> result;
+
                     if (paramss != null)
                     {
                         DynamicParameters dynamicParameters = new DynamicParameters();
                         foreach (KeyValuePair<string, dynamic> d in paramss)
                             dynamicParameters.Add(d.Key, d.Value);
-                        return sc.QueryAsync<T>(sqlcmd, dynamicParameters).Result.ToList();
+                        result = await sc.QueryAsync<T>(sqlcmd, dynamicParameters);
+                        return result.ToList();
                     }
 
-                    return sc.QueryAsync<T>(sqlcmd).Result.ToList();
+                    result = await sc.QueryAsync<T>(sqlcmd);
+                    return result.ToList();
                 }
             }
             catch (Exception e)
@@ -82,7 +86,7 @@ namespace MyDbHelper
         /// <param name="sqlcmd"></param>
         /// <param name="paramss"></param>
         /// <returns></returns>
-        public static void ExcAsync(string connectStr, string sqlcmd, KeyValuePair<string, dynamic>[] paramss = null)
+        public static async Task ExcAsync(string connectStr, string sqlcmd, KeyValuePair<string, dynamic>[] paramss = null)
         {
             try
             {
@@ -94,9 +98,9 @@ namespace MyDbHelper
                 using (SqlConnection sc = new SqlConnection(connectStr))
                 {
                     if (paramss != null)
-                        sc.Execute(sqlcmd, dynamicParameters);
+                        await sc.ExecuteAsync(sqlcmd, dynamicParameters);
                     else
-                        sc.Execute(sqlcmd);
+                        await sc.ExecuteAsync(sqlcmd);
                 }
             }
             catch (Exception e)
