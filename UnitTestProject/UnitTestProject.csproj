@@ -51,7 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\CommanderTests.cs" />
+    <Compile Include="DbHelper\DbTableManagerTests.cs" />
     <Compile Include="DbHelper\DbQueryTests.cs" />
+    <Compile Include="DbHelper\TestStructForDbTableManager.cs" />
     <Compile Include="File\FileMangerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedisHelper\RedisManagerTests.cs" />

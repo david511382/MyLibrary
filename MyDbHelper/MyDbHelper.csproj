@@ -47,10 +47,17 @@
     <Compile Include="BulkCopy.cs" />
     <Compile Include="DbQuery.cs" />
     <Compile Include="DBStructure.cs" />
+    <Compile Include="DbTableManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyReflection\MyReflection.csproj">
+      <Project>{F31A533B-6189-4785-99BA-4E397053498F}</Project>
+      <Name>MyReflection</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

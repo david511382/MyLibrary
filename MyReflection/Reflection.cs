@@ -12,14 +12,15 @@ namespace MyReflection
         public static List<KeyValuePair<string, object>> ReflectionObject(object target)
         {
             List<KeyValuePair<string, object>> results = new List<KeyValuePair<string, object>>();
-            object obj;
+
             //foreach每一個欄位屬性及值,並進行判斷儲存
             ReflectionObject(target,
                 element =>
                 {
+                    object obj;
                     obj = element.GetValue(target);
-                    string propertyName = obj?.ToString();
-                    results.Add(new KeyValuePair<string, object>(element.Name, propertyName));
+                    string propertyValue = obj?.ToString();
+                    results.Add(new KeyValuePair<string, object>(element.Name, propertyValue));
                 }
             );
 
