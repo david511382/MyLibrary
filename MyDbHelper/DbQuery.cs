@@ -86,7 +86,7 @@ namespace MyDbHelper
         /// <param name="sqlcmd"></param>
         /// <param name="paramss"></param>
         /// <returns></returns>
-        public static async Task ExcAsync(string connectStr, string sqlcmd, KeyValuePair<string, dynamic>[] paramss = null)
+        public static async Task ExcAsync(string connectStr, string sqlcmd,params KeyValuePair<string, dynamic>[] paramss)
         {
             try
             {
@@ -101,6 +101,29 @@ namespace MyDbHelper
                         await sc.ExecuteAsync(sqlcmd, dynamicParameters);
                     else
                         await sc.ExecuteAsync(sqlcmd);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public static void Exc(string connectStr, string sqlcmd, params KeyValuePair<string, dynamic>[] paramss)
+        {
+            try
+            {
+                DynamicParameters dynamicParameters = new DynamicParameters();
+                if (paramss != null)
+                    foreach (KeyValuePair<string, dynamic> d in paramss)
+                        dynamicParameters.Add(d.Key, d.Value);
+
+                using (SqlConnection sc = new SqlConnection(connectStr))
+                {
+                    if (paramss != null)
+                        sc.Execute(sqlcmd, dynamicParameters);
+                    else
+                        sc.Execute(sqlcmd);
                 }
             }
             catch (Exception e)

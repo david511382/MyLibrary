@@ -9,19 +9,30 @@ namespace MyReflection
 {
     public static class Reflection
     {
-        public static List<KeyValuePair<string,object>> ReflectionObject(object target)
+        public static List<KeyValuePair<string, object>> ReflectionObject(object target)
         {
             List<KeyValuePair<string, object>> results = new List<KeyValuePair<string, object>>();
             object obj;
             //foreach每一個欄位屬性及值,並進行判斷儲存
-            foreach (PropertyInfo element in target.GetType().GetProperties())
-            {
-                obj = element.GetValue(target);
-                string propertyName = obj?.ToString();
-                results.Add(new KeyValuePair<string, object>(element.Name, propertyName));
-            }
+            ReflectionObject(target,
+                element =>
+                {
+                    obj = element.GetValue(target);
+                    string propertyName = obj?.ToString();
+                    results.Add(new KeyValuePair<string, object>(element.Name, propertyName));
+                }
+            );
 
             return results;
+        }
+
+        public static void ReflectionObject(object target, Action<PropertyInfo> action)
+        {
+            //foreach每一個欄位屬性及值,並進行判斷儲存
+            foreach (PropertyInfo element in target.GetType().GetProperties())
+            {
+                action(element);
+            }
         }
     }
 }

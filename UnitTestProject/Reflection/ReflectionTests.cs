@@ -17,7 +17,7 @@ namespace MyReflection.Tests
         {
             TestClass testClass = new TestClass();
 
-            List<KeyValuePair<string,object>> result = Reflection.ReflectionObject(testClass);
+            List<KeyValuePair<string, object>> result = Reflection.ReflectionObject(testClass);
 
             Assert.AreEqual(result[0].Key, "i");
             Assert.AreEqual(Int32.Parse(result[0].Value.ToString()), 11);

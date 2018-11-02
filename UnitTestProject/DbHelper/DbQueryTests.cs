@@ -18,7 +18,7 @@ namespace DbHelper.Tests
 
             string connectStr = @"Data Source=(LOCALDB)\MSSQLLOCALDB;Initial Catalog=UnitTest;Integrated Security=True";
             string cmdStr = "select count(1) from dbo.test";
-            List<int> ilist = DbQuery<int>.GetDataAsync(connectStr, cmdStr);
+            List<int> ilist = DbQuery<int>.GetData(connectStr, cmdStr);
             Assert.AreEqual(ilist[0], 0);
         }
 
@@ -27,7 +27,7 @@ namespace DbHelper.Tests
         {
             string connectStr = @"Data Source=(LOCALDB)\MSSQLLOCALDB;Initial Catalog=UnitTest;Integrated Security=True";
             string cmdStr = "select count(1) from dbo.test Where id > @id";
-            List<int> ilist = DbQuery<int>.GetDataAsync(connectStr, cmdStr, new KeyValuePair<string, dynamic>[] { new KeyValuePair<string, dynamic>("id", 0) });
+            List<int> ilist = DbQuery<int>.GetData(connectStr, cmdStr, new KeyValuePair<string, dynamic>[] { new KeyValuePair<string, dynamic>("id", 0) });
             Assert.AreEqual(ilist[0], 0);
         }
 
@@ -36,7 +36,7 @@ namespace DbHelper.Tests
         {
             string connectStr = @"Data Source=(LOCALDB)\MSSQLLOCALDB;Initial Catalog=UnitTest;Integrated Security=True";
             string cmdStr = "INSERT INTO [dbo].[test] ([varchar] ,[int] ,[datetime]) VALUES (@varchar,@int,@datetime)";
-            DbQuery.ExcAsync(connectStr, cmdStr, new KeyValuePair<string, dynamic>[]
+            DbQuery.Exc(connectStr, cmdStr, new KeyValuePair<string, dynamic>[]
             {
                 new KeyValuePair<string, dynamic>("varchar", ""),
                 new KeyValuePair<string, dynamic>("int", 0),
@@ -46,7 +46,7 @@ namespace DbHelper.Tests
             checkCount(1);
 
             cmdStr = "delete dbo.test";
-            DbQuery.ExcAsync(connectStr, cmdStr);
+            DbQuery.Exc(connectStr, cmdStr);
 
             checkCount(0);
         }
