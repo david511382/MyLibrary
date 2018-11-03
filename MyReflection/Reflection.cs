@@ -27,6 +27,33 @@ namespace MyReflection
             return results;
         }
 
+        public static object[] GetValuesByNames(object target, string[] names)
+        {
+            List<string> targetNames = new List<string>();
+            List<object> targetValues = new List<object>();
+            ReflectionObject(target,
+                element =>
+                {
+                    targetNames.Add(element.Name);
+                    targetValues.Add(element.GetValue(target));
+                }
+            );
+
+            object[] result = new object[names.Length];
+            for(int i = 0; i < names.Length; i++)
+            {
+                for(int j = 0; j < targetNames.Count; j++)
+                {
+                    if (names[i].Equals(targetNames[j]))
+                    {
+                        result[i] = targetValues[j];
+                    }
+                }
+            }
+
+            return result.ToArray();
+        }
+
         public static void ReflectionObject(object target, Action<PropertyInfo> action)
         {
             //foreach每一個欄位屬性及值,並進行判斷儲存

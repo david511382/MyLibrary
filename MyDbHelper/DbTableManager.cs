@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace MyDbHelper
 {
-    public class NotInserAble : Attribute
+    public class NotInsertAble : Attribute
+    {
+
+    }
+
+    public class NotDataColumn: Attribute
     {
 
     }
@@ -21,53 +26,87 @@ namespace MyDbHelper
     {
         public static void Insert(T tableStruct, string connectStr)
         {
-            List<KeyValuePair<string, object>> colNameAndValues= new List<KeyValuePair<string, object>>();
-            
+            string[] colNames = GetInsertColNames(tableStruct);
+            object[] values = Reflection.GetValuesByNames(tableStruct, colNames);
+            string insertSql = GetInsertSqlcmd(tableStruct.GetTableName(), colNames);
+
+            List<KeyValuePair<string, dynamic>> parameters = GetParameters(colNames, values); 
+
+            DbQuery.Exc(connectStr, insertSql, parameters.ToArray());
+        }
+
+        public static void Insert(List<T> tableStructs, string connectStr)
+        {
+            if (tableStructs.Count == 0)
+                return;
+
+            string[] colNames = GetInsertColNames(tableStructs[0]);
+            string insertSql = GetInsertSqlcmd(tableStructs[0].GetTableName(), colNames);
+            object[] values;
+            List<KeyValuePair<string, dynamic>> parameters;
+
+            foreach (T obj in tableStructs)
+            {
+                values = Reflection.GetValuesByNames(obj, colNames);
+                parameters = GetParameters(colNames, values);
+                DbQuery.Exc(connectStr, insertSql, parameters.ToArray());
+            }
+        }
+
+        private static List<KeyValuePair<string, dynamic>> GetParameters(string[] colNames ,object[] values)
+        {
+            List<KeyValuePair<string, dynamic>> parameters = new List<KeyValuePair<string, dynamic>>();
+            for (int i = 0; i < colNames.Length; i++)
+            {
+                parameters.Add(new KeyValuePair<string, dynamic>(colNames[i], values[i]));
+            }
+            return parameters;
+        }
+
+        private static string GetInsertSqlcmd(string tableName, string[] colNames)
+        {
+            string insertSql = "INSERT INTO " + tableName + " (";
+            string insertSqlValue = "VALUES (";
+            string s = ",";
+            string colName;
+            for (int i = 0; i < colNames.Length; i++)
+            {
+                if (i == colNames.Length - 1)
+                    s = "";
+                colName = colNames[i];
+                insertSql += " " + colName + s;
+                insertSqlValue += " @" + colName + s;
+            }
+            insertSql += " ) " + insertSqlValue + " ) ";
+            return insertSql;
+        }
+
+        private static string[] GetInsertColNames(T target)
+        {
+            List<string> colNames = new List<string>();
+
             // get col name and value which can be inserted
-            Reflection.ReflectionObject(tableStruct,
+            Reflection.ReflectionObject(target,
                 element =>
                 {
-                    object obj;
-                    obj = element.GetValue(tableStruct);
-                    string propertyValue = obj?.ToString();
-                    string propName = element.Name;
-                    
-                    bool isUse = true;
                     object[] attrs = element.GetCustomAttributes(false);
                     foreach (object attr in attrs)
                     {
-                        NotInserAble authAttr = attr as NotInserAble;
-                        if (authAttr != null)
+                        NotInsertAble notInsert = attr as NotInsertAble;
+                        NotDataColumn notDataColumn = attr as NotDataColumn;
+                        if (notInsert != null || notDataColumn != null)
                         {
                             //dont use
-                            isUse = false;
+                            return;
                         }
                     }
 
-                    if (isUse)
-                        colNameAndValues.Add(new KeyValuePair<string, object>(propName, propertyValue));
+                    string propName = element.Name;
+                    colNames.Add(propName);
                 }
             );
 
-            if (colNameAndValues.Count == 0)
-                return;
-
-            string insertSql = "INSERT INTO "+ tableStruct.GetTableName() + " (";
-            string insertSqlValue = "VALUES (";
-            string s = ",";
-            List<KeyValuePair<string, dynamic>> parameters = new List<KeyValuePair<string, dynamic>>();
-            string colName;
-            for (int i = 0; i < colNameAndValues.Count; i++)
-            {
-                if (i == colNameAndValues.Count - 1)
-                    s = "";
-                colName = colNameAndValues[i].Key;
-                insertSql += " " + colName + s;
-                insertSqlValue += " @" + colName + s;
-                parameters.Add(new KeyValuePair<string, dynamic>(colName, colNameAndValues[i].Value));
-            }
-            insertSql += " ) " + insertSqlValue + " ) ";
-            DbQuery.Exc(connectStr, insertSql, parameters.ToArray());
+            return colNames.ToArray();
         }
     }
 

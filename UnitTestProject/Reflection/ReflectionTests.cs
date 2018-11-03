@@ -42,5 +42,22 @@ namespace MyReflection.Tests
 
             Assert.AreEqual(result.Count, 7);
         }
+
+        [TestMethod()]
+        public void GetReflectionObjectTest()
+        {
+            TestClass testClass = new TestClass();
+            testClass.b = false;
+            testClass.d = 5425.23;
+            testClass.f = 254.5f;
+            testClass.i = 10;
+
+            object[] result = Reflection.GetValuesByNames(testClass, new string[] { "b", "d", "f", "i" });
+
+            Assert.AreEqual(result[0], testClass.b);
+            Assert.AreEqual(result[1], testClass.d);
+            Assert.AreEqual(result[2], testClass.f);
+            Assert.AreEqual(result[3], testClass.i);
+        }
     }
 }

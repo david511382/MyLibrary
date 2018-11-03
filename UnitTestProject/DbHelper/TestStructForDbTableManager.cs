@@ -25,7 +25,7 @@ namespace DbHelper.Tests
 
     class TestStructForDbTableManager : DbTable
     {
-        [NotInserAble]
+        [NotInsertAble]
         public int id { get; set; }
         public int intC { get; set; }
         public string varchar10 { get; set; }
@@ -33,7 +33,25 @@ namespace DbHelper.Tests
         public string varcharNull10 { get; set; }
         public int intNull { get; set; }
         public DateTime datetimeNull { get; set; }
+        
+        public string GetTableName()
+        {
+            return "test";
+        }
+    }
 
+    class NoInsertCharNullTestStructForDbTableManager : DbTable
+    {
+        [NotInsertAble]
+        public int id { get; set; }
+        public int intC { get; set; }
+        public string varchar10 { get; set; }
+        public DateTime datetime { get; set; }
+        [NotDataColumn]
+        public string varcharNull10 { get; set; }
+        public int intNull { get; set; }
+        public DateTime datetimeNull { get; set; }
+        
         public string GetTableName()
         {
             return "test";

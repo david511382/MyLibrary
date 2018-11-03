@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\CommanderTests.cs" />
+    <Compile Include="Common\MappingTests.cs" />
     <Compile Include="DbHelper\DbTableManagerTests.cs" />
     <Compile Include="DbHelper\DbQueryTests.cs" />
     <Compile Include="DbHelper\TestStructForDbTableManager.cs" />
@@ -67,6 +68,10 @@
     <ProjectReference Include="..\MyCommand\MyCommand.csproj">
       <Project>{621fc51a-cc09-42b8-8fe2-5dd517edd29d}</Project>
       <Name>MyCommand</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyCommon\MyCommon.csproj">
+      <Project>{52fd1efb-c0d2-4b0b-977b-80b76d9384be}</Project>
+      <Name>MyCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyDbHelper\MyDbHelper.csproj">
       <Project>{32e1f05c-c1c5-42eb-bef9-1926be57c7c7}</Project>

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>david511382.MyLib</id>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <authors>david</authors>
     <owners>david</owners>
     <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
@@ -24,5 +24,6 @@
     <file src="MyDbHelper\bin\Debug\MyDbHelper.dll" target="lib"></file>
     <file src="MyRedisHelper\bin\Debug\MyRedisHelper.dll" target="lib"></file>
     <file src="MyReflection\bin\Debug\MyReflection.dll" target="lib"></file>
+    <file src="MyCommon\bin\Debug\MyCommon.dll" target="lib"></file>
   </files>
 </package>
