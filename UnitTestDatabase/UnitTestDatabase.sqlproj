@@ -63,4 +63,7 @@
   <ItemGroup>
     <Build Include="dbo\Tables\test.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="UnitTestDatabase.refactorlog" />
+  </ItemGroup>
 </Project>

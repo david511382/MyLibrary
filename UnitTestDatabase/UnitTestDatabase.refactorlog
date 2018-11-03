@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="7bcc8cb8-2d34-46b8-b809-843138b07c7b" ChangeDateTime="11/03/2018 02:48:29">
+    <Property Name="ElementName" Value="[dbo].[test].[int]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[test]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="intC" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bc5af973-b90a-41d1-9eec-0d971c4da748" ChangeDateTime="11/03/2018 02:56:04">
+    <Property Name="ElementName" Value="[dbo].[test].[varchar]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[test]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="varchar10" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c1371dbf-24b7-48cc-bf70-f938056ca910" ChangeDateTime="11/03/2018 02:56:08">
+    <Property Name="ElementName" Value="[dbo].[test].[varcharNull]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[test]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="varcharNull10" />
+  </Operation>
+</Operations>

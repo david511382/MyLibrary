@@ -16,10 +16,14 @@ namespace DbHelper.Tests
         {
             string connectStr = @"Data Source=(LOCALDB)\MSSQLLOCALDB;Initial Catalog=UnitTest;Integrated Security=True";
             int count;
+            const string identity = "1234567890";
             ErrTestStructForDbTableManager errTestStruct = new ErrTestStructForDbTableManager();
-            errTestStruct.lotterycode = "test";
-            errTestStruct.add_time = DateTime.Now;
-            errTestStruct.open_time = DateTime.Now;
+            errTestStruct.id = 1;
+            errTestStruct.intC = 1;
+            errTestStruct.varchar10 = identity;
+            errTestStruct.varcharNull10 = "";
+            errTestStruct.datetime = DateTime.Now;
+            errTestStruct.datetimeNull = DateTime.Now;
 
             try
             {
@@ -28,24 +32,36 @@ namespace DbHelper.Tests
             }
             catch
             {
-                count = DbQuery<int>.GetData(connectStr, "select count(1) from " + errTestStruct.GetTableName() + " where lotterycode = 'test'")[0];
+                count = DbQuery<int>.GetData(connectStr, "select count(1) from " + errTestStruct.GetTableName() + " where varchar10 = '" + identity + "'")[0];
                 Assert.AreEqual(count, 0);
+            }
+            finally
+            {
+                DbQuery.Exc(connectStr, "delete test");
             }
 
             TestStructForDbTableManager testStruct = new TestStructForDbTableManager();
-            testStruct.lotterycode = "test";
-            testStruct.add_time = DateTime.Now;
-            testStruct.open_time = DateTime.Now;
+            testStruct.id = 1;
+            testStruct.intC = 1;
+            testStruct.varchar10= identity;
+            testStruct.varcharNull10= "";
+            testStruct.datetime = DateTime.Now;
+            testStruct.datetimeNull = DateTime.Now;
+
             try
             {
                 DbTableManager<TestStructForDbTableManager>.Insert(testStruct, connectStr);
 
-                count = DbQuery<int>.GetData(connectStr, "select count(1) from " + errTestStruct.GetTableName() + " where lotterycode = 'test'")[0];
+                count = DbQuery<int>.GetData(connectStr, "select count(1) from " + errTestStruct.GetTableName() + " where varchar10 = '" + identity + "'")[0];
                 Assert.AreEqual(count, 1);
             }
             catch (Exception e)
             {
                 Assert.Fail();
+            }
+            finally
+            {
+                DbQuery.Exc(connectStr, "delete test");
             }
         }
     }

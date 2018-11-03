@@ -10,17 +10,16 @@ namespace DbHelper.Tests
     class ErrTestStructForDbTableManager : DbTable
     {
         public int id { get; set; }
-        public string lotterycode { get; set; }
-        public string lotteryopen_no { get; set; }
-        public string issue_no { get; set; }
-        public DateTime open_time { get; set; }
-        public int state { get; set; }
-        public int is_manual { get; set; }
-        public DateTime add_time { get; set; }
+        public int intC { get; set; }
+        public string varchar10 { get; set; }
+        public DateTime datetime { get; set; }
+        public string varcharNull10 { get; set; }
+        public int intNull { get; set; }
+        public DateTime datetimeNull { get; set; }
 
         public string GetTableName()
         {
-            return "dt_lottery_open";
+            return "test";
         }
     }
 
@@ -28,17 +27,16 @@ namespace DbHelper.Tests
     {
         [NotInserAble]
         public int id { get; set; }
-        public string lotterycode { get; set; }
-        public string lotteryopen_no { get; set; }
-        public string issue_no { get; set; }
-        public DateTime open_time { get; set; }
-        public int state { get; set; }
-        public int is_manual { get; set; }
-        public DateTime add_time { get; set; }
+        public int intC { get; set; }
+        public string varchar10 { get; set; }
+        public DateTime datetime { get; set; }
+        public string varcharNull10 { get; set; }
+        public int intNull { get; set; }
+        public DateTime datetimeNull { get; set; }
 
         public string GetTableName()
         {
-            return "dt_lottery_open";
+            return "test";
         }
     }
 }

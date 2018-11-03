@@ -26,9 +26,8 @@ namespace MyDbHelper
                 {
                     if (paramss != null)
                     {
-                        DynamicParameters dynamicParameters = new DynamicParameters();
-                        foreach (KeyValuePair<string, dynamic> d in paramss)
-                            dynamicParameters.Add(d.Key, d.Value);
+                        DynamicParameters dynamicParameters = DbQuery.GetDynamicParametersWithKeyValuePairs(paramss);
+
                         return sc.Query<T>(sqlcmd, dynamicParameters).ToList();
                     }
 
@@ -58,9 +57,8 @@ namespace MyDbHelper
 
                     if (paramss != null)
                     {
-                        DynamicParameters dynamicParameters = new DynamicParameters();
-                        foreach (KeyValuePair<string, dynamic> d in paramss)
-                            dynamicParameters.Add(d.Key, d.Value);
+                        DynamicParameters dynamicParameters = DbQuery.GetDynamicParametersWithKeyValuePairs(paramss);
+
                         result = await sc.QueryAsync<T>(sqlcmd, dynamicParameters);
                         return result.ToList();
                     }
@@ -92,8 +90,7 @@ namespace MyDbHelper
             {
                 DynamicParameters dynamicParameters = new DynamicParameters();
                 if (paramss != null)
-                    foreach (KeyValuePair<string, dynamic> d in paramss)
-                        dynamicParameters.Add(d.Key, d.Value);
+                    dynamicParameters = DbQuery.GetDynamicParametersWithKeyValuePairs(paramss);
 
                 using (SqlConnection sc = new SqlConnection(connectStr))
                 {
@@ -115,8 +112,7 @@ namespace MyDbHelper
             {
                 DynamicParameters dynamicParameters = new DynamicParameters();
                 if (paramss != null)
-                    foreach (KeyValuePair<string, dynamic> d in paramss)
-                        dynamicParameters.Add(d.Key, d.Value);
+                    dynamicParameters = GetDynamicParametersWithKeyValuePairs(paramss);
 
                 using (SqlConnection sc = new SqlConnection(connectStr))
                 {
@@ -161,6 +157,27 @@ namespace MyDbHelper
                 throw new Exception(ex.ToString());
             }
         }
+
         #endregion
+
+        internal static DynamicParameters GetDynamicParametersWithKeyValuePairs(KeyValuePair<string, dynamic>[] keyValuePairs)
+        {
+            if (keyValuePairs == null)
+                return new DynamicParameters();
+
+            DynamicParameters result = new DynamicParameters();
+            DateTime dateTime;
+            string valueStr;
+            foreach (KeyValuePair<string, dynamic> d in keyValuePairs)
+            {
+                valueStr = Convert.ToString(d.Value);
+                if (DateTime.TryParse(valueStr, out dateTime))
+                    result.Add(d.Key, dateTime);
+                else
+                    result.Add(d.Key, d.Value);
+            }
+
+            return result;
+        }
     }
 }

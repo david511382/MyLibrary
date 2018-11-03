@@ -35,12 +35,12 @@ namespace DbHelper.Tests
         public void ExcTest()
         {
             string connectStr = @"Data Source=(LOCALDB)\MSSQLLOCALDB;Initial Catalog=UnitTest;Integrated Security=True";
-            string cmdStr = "INSERT INTO [dbo].[test] ([varchar] ,[int] ,[datetime]) VALUES (@varchar,@int,@datetime)";
+            string cmdStr = "INSERT INTO [dbo].[test] ([varchar10] ,[intC] ,[datetime]) VALUES (@varchar10,@intC,@datetime)";
             DbQuery.Exc(connectStr, cmdStr, new KeyValuePair<string, dynamic>[]
             {
-                new KeyValuePair<string, dynamic>("varchar", ""),
-                new KeyValuePair<string, dynamic>("int", 0),
-                new KeyValuePair<string, dynamic>("datetime", "2018-01-01")
+                new KeyValuePair<string, dynamic>("varchar10", ""),
+                new KeyValuePair<string, dynamic>("intC", 0),
+                new KeyValuePair<string, dynamic>("datetime", DateTime.Now)
             });
 
             checkCount(1);
