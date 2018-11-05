@@ -9,6 +9,14 @@ namespace MyFile
 {
     public class FileManger
     {
+        /// <summary>
+        /// ~Desktop\
+        /// </summary>
+        static readonly string Desktop_Path;
+        static FileManger()
+        {
+            Desktop_Path = "C:\\Users\\" + Environment.UserName + "\\Desktop\\";
+        }
 
         /// <summary>
         /// get current directory path
