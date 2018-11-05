@@ -73,7 +73,11 @@ namespace MyDbHelper
                 colName = targetTable.Rows[i].ItemArray[0].ToString();
                 //组装插入表的行
                 string columnType = targetTable.Rows[i].ItemArray[1].ToString();
-                data.Columns.Add(colName, GetColumnsType(columnType));
+                try
+                {
+                    data.Columns.Add(colName, GetColumnsType(columnType));
+                }
+                catch { }
             }
 
             return data;
