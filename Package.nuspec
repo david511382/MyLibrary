@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>david511382.MyLib</id>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <authors>david</authors>
     <owners>david</owners>
     <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
@@ -12,10 +12,11 @@
     <description>my package</description>
     <releaseNotes>Add reflection</releaseNotes>
     <copyright>Copyright 2018</copyright>
-    <tags>File Command DB Redis Reflection</tags>
+    <tags>File Excel Command DB Redis Reflection</tags>
     <dependencies>
       <dependency id="Dapper" version="1.50.5" />
       <dependency id="ServiceStack.Redis" version="5.4.0" />
+      <dependency id="Microsoft.Office.Interop.Excel" version="15.0.4795.1000" />
     </dependencies>
   </metadata>
   <files>
