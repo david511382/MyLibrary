@@ -8,7 +8,7 @@ using ExcelFile = Microsoft.Office.Interop.Excel;
 
 namespace MyFile
 {
-    class Excel
+    public class Excel
     {
         private ExcelFile.Application _excel;
         private ExcelFile.Workbook _book;

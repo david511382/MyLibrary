@@ -56,6 +56,24 @@ namespace MyFile
             return path + "\\" + file;
         }
 
+        /// <summary>
+        /// rootPath is @"D:\Test". type is "txt" or else
+        /// </summary>
+        /// <param name="rootPath"></param>
+        /// <param name="type"></param>
+        public static string[] GetAllFileNamesWithTypeInRoot(string rootPath,string type)
+        {
+            DirectoryInfo d = new DirectoryInfo(rootPath);
+            FileInfo[] Files = d.GetFiles("*."+type); //Getting files
+            List<string> names = new List<string>();
+            foreach (FileInfo file in Files)
+            {
+                names.Add(file.Name);
+            }
+
+            return names.ToArray();
+        }
+
         public static string ReadFile(string path)
         {
             string result = string.Empty;
