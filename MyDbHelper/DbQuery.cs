@@ -171,13 +171,32 @@ namespace MyDbHelper
             foreach (KeyValuePair<string, dynamic> d in keyValuePairs)
             {
                 valueStr = Convert.ToString(d.Value);
-                if (DateTime.TryParse(valueStr, out dateTime))
+
+                if (CanParseDateTime(valueStr) && DateTime.TryParse(valueStr, out dateTime))
                     result.Add(d.Key, dateTime);
                 else
                     result.Add(d.Key, d.Value);
             }
 
             return result;
+        }
+
+        private static bool CanParseDateTime(string dateStr)
+        {
+            string[] dateStrPart = dateStr.Split(' ');
+            try
+            {
+                if (
+                    dateStrPart[0][4] == '/' &&
+                    (dateStrPart[0][6] == '/' || dateStrPart[0][7] == '/') &&
+                    dateStrPart[1].Contains("午") &&
+                    dateStrPart[2][2] == ':' &&
+                    dateStrPart[2][5] == ':'
+                    )
+                    return true;
+            }
+            catch { }
+            return false;
         }
     }
 }
